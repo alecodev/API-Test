@@ -13,3 +13,11 @@
 - Creación de pruebas
 - Creación de API
 - Validación de pruebas y refactorizar de ser necesario
+---
+
+
+#### ***Deploy***
+Para ejecutar la API utiliza el siguiente comando, en caso de querer ejecutar las pruebas de los endpoint agrega al final del comando ```-t``` o ```--test```
+```bash
+docker run --rm --env-file .env -p 5000:5000 -it $(docker build -q .)
+```

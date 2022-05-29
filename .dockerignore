@@ -1,0 +1,9 @@
+.git
+db
+venv
+.dockerignore
+.editorconfig
+.gitignore
+docker-compose.yml
+LICENSE
+README.md
