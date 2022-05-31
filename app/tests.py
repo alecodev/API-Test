@@ -1,20 +1,14 @@
 import os
 import sys
-import glob
 import importlib
-from inspect import isfunction
 import requests
-
+from requests.exceptions import HTTPError
 
 
 class tests(object):
 
 
-    _url = None
-
-
-    def __init__(self, url):
-        self._url = url
+    def run(self, url):
         print(
             '-'*40+'\n' \
             + '|'+' '*13+'🤖 Run Tests'+' '*13+'|\n' \
@@ -36,10 +30,39 @@ class tests(object):
             print('\t[+] ' + file)
 
             module = importlib.import_module('resources.'+file)
-            if not hasattr(module, 'test_endpoint'):
+            if (not hasattr(module, 'test')) or (not hasattr(module.test, 'endpoint')):
                 print('\t\t❌ Error el Endpoint ' + file + ' no tiene pruebas')
                 sys.exit(1)
             else:
-                module.test_endpoint()
+                module.test().endpoint(url)
 
         print('-'*40)
+
+
+    def print_info_test(self, _msg):
+        sys.stdout.write('\t\t👉 '+_msg+' 🧪')
+        sys.stdout.flush()
+        sys.stdout.write('\b')
+
+
+    def print_status_test(self, _status):
+        if _status:
+            sys.stdout.write('\b✅')
+        else:
+            sys.stdout.write('\b❌')
+        sys.stdout.flush()
+        sys.stdout.write('\b\n')
+
+
+    def make_request(self, _url, _method='GET', **kwargs):
+        try:
+            response = requests.request(_method, _url, **kwargs)
+
+            # If the response was successful, no Exception will be raised
+            response.raise_for_status()
+        except HTTPError as http_err:
+            return {'status': False, 'response': response, 'message': f'HTTP error occurred: {http_err}'}
+        except Exception as err:
+            return {'status': False, 'response': response, 'message': f'Other error occurred: {err}'}
+        else:
+            return {'status': True, 'response': response}
