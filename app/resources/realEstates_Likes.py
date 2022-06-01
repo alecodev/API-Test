@@ -2,14 +2,19 @@ import sys
 import tests
 
 
-class test(tests.tests):
+class endpoint(object):
 
+    def do_POST(self, args=(), data=None):
+        pass
+
+
+class test(tests.tests):
 
     token = 'fd5dad2a0b92454f7490059ae9fd77d7c2cfaf074fad6a622b4eff048afa482d'
 
-
     def endpoint(self, url):
-        _endpoint = '/' + __file__.split('/')[-1].split('.')[0] + '/3'
+        _endpoint = '/' + \
+            __file__.split('/')[-1].split('.')[0].replace('_', '/%s/') % '3'
 
         # Prueba de me gusta a un inmueble
         self.print_info_test('Dar me gusta a un inmueble en específico')

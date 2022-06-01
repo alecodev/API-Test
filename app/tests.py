@@ -7,11 +7,11 @@ from requests.exceptions import HTTPError
 
 class tests(object):
 
-
     def run(self, url):
         print(
-            '-'*40+'\n' \
-            + '|'+' '*13+'🤖 Run Tests'+' '*13+'|\n' \
+            '\n'+
+            '-'*40+'\n'
+            + '|'+' '*13+'🤖 Run Tests'+' '*13+'|\n'
             + '-'*40+'\n'
         )
 
@@ -19,7 +19,7 @@ class tests(object):
             map(
                 lambda x: x.split('.')[0],
                 filter(
-                    lambda x: x.endswith('.py') and x!='__init__.py',
+                    lambda x: x.endswith('.py') and x != '__init__.py',
                     next(os.walk('./resources'), (None, None, []))[2]
                 )
             )
@@ -38,12 +38,10 @@ class tests(object):
 
         print('-'*40)
 
-
     def print_info_test(self, _msg):
         sys.stdout.write('\t\t👉 '+_msg+' 🧪')
         sys.stdout.flush()
         sys.stdout.write('\b')
-
 
     def print_status_test(self, _status):
         if _status:
@@ -52,7 +50,6 @@ class tests(object):
             sys.stdout.write('\b❌')
         sys.stdout.flush()
         sys.stdout.write('\b\n')
-
 
     def make_request(self, _url, _method='GET', **kwargs):
         try:
@@ -63,6 +60,6 @@ class tests(object):
         except HTTPError as http_err:
             return {'status': False, 'response': response, 'message': f'HTTP error occurred: {http_err}'}
         except Exception as err:
-            return {'status': False, 'response': response, 'message': f'Other error occurred: {err}'}
+            return {'status': False, 'message': f'Other error occurred: {err}'}
         else:
             return {'status': True, 'response': response}
