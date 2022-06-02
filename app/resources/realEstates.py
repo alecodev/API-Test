@@ -1,10 +1,11 @@
 import sys
+import db
 import tests
 
 
 class endpoint(object):
 
-    def do_GET(self, args=(), data=None):
+    def do_GET(self, args=(), params={}, data=None):
         pass
 
 

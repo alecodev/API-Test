@@ -3,7 +3,7 @@
 
 #### ***Tecnologías***
 - Docker (python:3.10.4-alpine3.16)
-- Python 3.10.4 (requests, response, os, mysql.connector)
+- Python (requests, urllib3, mysql-connector, dicttoxml, xmltodict)
 ---
 
 
@@ -17,7 +17,16 @@
 
 
 #### ***Deploy***
-Para ejecutar la API utiliza el siguiente comando, en caso de querer ejecutar las pruebas de los endpoint agrega al final del comando ```-t``` o ```--test```
+Configura las credenciales de la base de datos en el archivo `.env`
+```.env
+DB_HOST=
+DB_DATABASE=
+DB_USER=
+DB_PASS=
+DB_PORT=
+```
+
+Para ejecutar la API utiliza el siguiente comando, en caso de querer ejecutar las pruebas de los endpoints agrega al final del comando ```-t``` o ```--test```
 ```bash
 docker run --rm --env-file .env -p 5000:5000 -it $(docker build -q .)
 ```
