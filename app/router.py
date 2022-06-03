@@ -19,7 +19,7 @@ class router(BaseHTTPRequestHandler):
     _http_code = 200
     _endpoints = {
         '/realEstates': {
-            '/': 'realEstates',
+            '/(|\d+)': 'realEstates',
             '/(\d+)/Likes': 'realEstates_Likes'
         }
     }

@@ -47,6 +47,10 @@ class endpoint(object):
                     'IN (' + ('%s, ' * len(_city)).rstrip(', ') + ')'))
             _data += _city
 
+        if len(args) == 1 and args[0].isnumeric():
+            _sql += ' AND p.id = %s'
+            _data += [int(args[0])]
+
         self.db.Execute(
             """
             SELECT p.address, p.city, s.name AS status, p.price, p.description
