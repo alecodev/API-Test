@@ -1,6 +1,7 @@
 import sys
 import os
 import mysql.connector
+from mysql.connector import errorcode
 
 
 class db(object):
@@ -25,9 +26,9 @@ class db(object):
                 charset='utf8'
             )
         except mysql.connector.Error as err:
-            if err.errno == mysql.connector.ER_ACCESS_DENIED_ERROR:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print('🔥 Error en usuario o contraseña de base de datos')
-            elif err.errno == mysql.connector.ER_BAD_DB_ERROR:
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
                 print('🔥 Error la base de datos "%s" no existe' %
                       str(os.environ['DB_DATABASE']))
             else:

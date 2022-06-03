@@ -68,8 +68,11 @@ class router(BaseHTTPRequestHandler):
             if (not hasattr(module, 'endpoint')) or (not hasattr(module.endpoint, 'do_'+_method)):
                 self._http_code = 404
             else:
-                result = getattr(module.endpoint(), 'do_' +
-                                 _method)(args=_args, params=_params, data=_data)
+                result, _code = getattr(
+                    module.endpoint(), 'do_' + _method)(args=_args, params=_params, data=_data, headers=self.headers)
+
+                if _code != self._http_code:
+                    self._http_code = _code
 
                 if _header_accept == 'application/json':
                     _data_return = json.dumps(
