@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  # docker exec -i $(docker ps --filter name=mysql -q) sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < /tmp/dump.sql
+  mysql:
+    networks:
+      - network_app
+    image: mysql:5.7.12
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+
+  python:
+    build: .
+    networks:
+      - network_app
+    env_file: .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    links:
+      - "mysql:mysql"
+    volumes:
+      - ./app:/usr/src/app:ro
+
+networks:
+  network_app:
+    name: my-pre-existing-network
+    # external: true
