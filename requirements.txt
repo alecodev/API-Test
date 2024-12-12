@@ -4,5 +4,5 @@ dicttoxml==1.7.4
 idna==3.7
 mysql-connector-python==9.1.0
 requests==2.32.2
-urllib3==1.26.9
+urllib3==1.26.19
 xmltodict==0.13.0
